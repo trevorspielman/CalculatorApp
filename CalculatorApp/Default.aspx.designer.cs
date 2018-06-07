@@ -50,5 +50,7 @@ namespace CalculatorApp {
 		protected System.Web.UI.WebControls.Button multiply;
 		
 		protected System.Web.UI.WebControls.Button divide;
+		
+		protected System.Web.UI.WebControls.Button equal;
 	}
 }

@@ -7,16 +7,30 @@
         .numbers{
             display: grid;
             grid-template-areas: 
-            "s e n" 
-            "f fi si"
-            "o t th"
-            "d z c"
+            "s e n add" 
+            "f fi si sub"
+            "o t th mul"
+            "d z c div"
+            ". . . equ";
+            height: 50vh;
+            width: 60vw;
+        }
+        .operator{
+            background: grey;
+            color: white;
+        }
+        .equals{
+            background: green;
+            color: white;
+        }
+        .equated{
+            background: green;
+            color: white;
         }
         input[type="submit"]{
             text-align: center;
-            width: 4rem;
-            height 10rem;
-            padding: 1rem;
+            width: 100%;
+            height 100%;
 <!--            transition: all .3s linear;-->
         }    
         input[type="submit"]:hover{
@@ -59,6 +73,23 @@
         }
         #clear{
             grid-area: c;
+            background: red;
+            color: white;
+        }
+        #add{
+            grid-area: add;
+        }
+        #subtract{
+            grid-area: sub;
+        }
+        #multiply{
+            grid-area: mul;
+        }
+        #divide{
+            grid-area: div;
+        }
+        #equal{
+            grid-area: equ;
         }
     </style>
 </head>
@@ -80,12 +111,12 @@
                 <asp:Button id="button0" runat="server" Text="0" OnCommand="buttonClicked" CommandArgument="0" />
                 <asp:Button id="decimal" runat="server" Text="." OnCommand="buttonClicked" CommandArgument="." />
                 <asp:Button id="clear" runat="server" Text="C" OnCommand="clearCalc" CommandArgument="." />
-                
+                <asp:Button CssClass="operator" id="add" runat="server" Text="+" OnCommand="calculateExpression" CommandArgument="+" />
+                <asp:Button CssClass="operator" id="subtract" runat="server" Text="-" OnCommand="calculateExpression" CommandArgument="-" />
+                <asp:Button CssClass="operator" id="multiply" runat="server" Text="*" OnCommand="calculateExpression" CommandArgument="*" />
+                <asp:Button CssClass="operator" id="divide" runat="server" Text="/" OnCommand="calculateExpression" CommandArgument="/"/>
+                <asp:Button CssClass="equals" id="equal" runat="server" Text="=" OnCommand="equalCalc" CommandArgument="="/>
             </div>
-            <asp:Button id="add" runat="server" Text="+" OnCommand="calculateExpression" CommandArgument="+" />
-            <asp:Button id="subtract" runat="server" Text="-" OnCommand="calculateExpression" CommandArgument="-" />
-            <asp:Button id="multiply" runat="server" Text="*" OnCommand="calculateExpression" CommandArgument="*" />
-            <asp:Button id="divide" runat="server" Text="/" OnCommand="calculateExpression" CommandArgument="/"/>
             
             
 	</form>

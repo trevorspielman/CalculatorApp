@@ -34,10 +34,12 @@ namespace CalculatorApp
         internal static void ApplyOperator(object calcOperator)
         {
             decimal n;
+            if(_state == CALCSTATE.INPUT){
+                currentS = "";
+            }
             decimal.TryParse(currentS, out n);
-            currentN += n;
             expression += calcOperator;
-			currentS = "";
+            currentS = "";
             //prevS = currentS;
 
             switch (calcOperator)
@@ -68,6 +70,13 @@ namespace CalculatorApp
                 expression += args.CommandArgument;
                 currentS = s;
             }
+            //Sets the initial value of currentN to first number entered
+            if (_state == CALCSTATE.INPUT)
+            {
+                decimal x;
+                decimal.TryParse(s, out x);
+                currentN = n;
+            }
         }
 
 
@@ -77,6 +86,7 @@ namespace CalculatorApp
             decimal n;
             decimal.TryParse(currentS, out n);
             runningTotal = (currentN + n);
+            currentN += n;
         }
 
         public static void Subtract()
@@ -84,6 +94,7 @@ namespace CalculatorApp
             decimal n;
             decimal.TryParse(currentS, out n);
             runningTotal = (currentN - n);
+            currentN -= n;
         }
 
         public static void Multiply()
@@ -91,6 +102,7 @@ namespace CalculatorApp
             decimal n;
             decimal.TryParse(currentS, out n);
             runningTotal = (currentN * n);
+            currentN *= n;
         }
 
 
@@ -99,6 +111,7 @@ namespace CalculatorApp
             decimal n;
             decimal.TryParse(currentS, out n);
             runningTotal = (currentN / n);
+            currentN /= n;
         }
 
     }

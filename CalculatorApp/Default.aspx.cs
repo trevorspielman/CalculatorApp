@@ -47,11 +47,19 @@ namespace CalculatorApp
             calcInput.Text = Calculator.expression;
         }
 
+        public void equalCalc(object sender, CommandEventArgs args){
+            if (calcInput.Text.Length < 1) { return; }
+            var equalOperator = args.CommandArgument;
+            calcInput.Text = Calculator.expression;
+            calcTotal.CssClass = "equated";
+        }
+
         public void clearCalc(object sender, CommandEventArgs args)
         {
             Calculator.clearCalc();
             calcInput.Text = Calculator.expression;
             calcTotal.Text = Calculator.runningTotal.ToString();
+            calcTotal.CssClass = "";
         }
 
     }
