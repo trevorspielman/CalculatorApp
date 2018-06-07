@@ -16,8 +16,8 @@ namespace CalculatorApp
     {
         public static CALCSTATE _state { get; private set; } = CALCSTATE.INPUT;
         public static decimal currentN { get; private set; } = 0;
+        public static decimal prevN { get; private set; } = 1;
         public static string currentS { get; private set; } = "";
-        public static string prevS { get; private set; } = "";
         public static decimal runningTotal { get; private set; } = 0;
         public static string expression { get; private set; } = "";
 
@@ -26,7 +26,7 @@ namespace CalculatorApp
             _state = CALCSTATE.INPUT;
             currentN = 0;
             currentS = "";
-            prevS = "";
+            prevN = 1;
             runningTotal = 0;
             expression = "";
         }
@@ -87,6 +87,7 @@ namespace CalculatorApp
             decimal.TryParse(currentS, out n);
             runningTotal = (currentN + n);
             currentN += n;
+            prevN = n;
         }
 
         public static void Subtract()
@@ -95,14 +96,16 @@ namespace CalculatorApp
             decimal.TryParse(currentS, out n);
             runningTotal = (currentN - n);
             currentN -= n;
+            prevN = -n;
         }
 
         public static void Multiply()
         {
             decimal n;
             decimal.TryParse(currentS, out n);
-            runningTotal = (currentN * n);
+            runningTotal = (currentN + (prevN * n));
             currentN *= n;
+            prevN = runningTotal;
         }
 
 
@@ -110,8 +113,9 @@ namespace CalculatorApp
         {
             decimal n;
             decimal.TryParse(currentS, out n);
-            runningTotal = (currentN / n);
+            runningTotal = (currentN + (prevN / n));
             currentN /= n;
+            prevN = runningTotal;
         }
 
     }
