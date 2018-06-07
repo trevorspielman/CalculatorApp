@@ -38,24 +38,31 @@ namespace CalculatorApp
                 currentS = "";
             }
             decimal.TryParse(currentS, out n);
-            expression += calcOperator;
-            currentS = "";
-            //prevS = currentS;
-
-            switch (calcOperator)
+            if (!"()+-*/".Contains(expression[expression.Length-1].ToString()))
             {
-                case "+":
-                    _state = CALCSTATE.ADD;
-                    break;
-                case "-":
-                    _state = CALCSTATE.SUBTRACT;
-                    break;
-                case "*":
-                    _state = CALCSTATE.MULTIPLY;
-                    break;
-                case "/":
-                    _state = CALCSTATE.DIVIDE;
-                    break;
+                expression += calcOperator;
+                currentS = "";
+                //prevS = currentS;
+
+                switch (calcOperator)
+                {
+                    case "+":
+                        _state = CALCSTATE.ADD;
+                        break;
+                    case "-":
+                        _state = CALCSTATE.SUBTRACT;
+                        break;
+                    case "*":
+                        _state = CALCSTATE.MULTIPLY;
+                        break;
+                    case "/":
+                        _state = CALCSTATE.DIVIDE;
+                        break;
+                }
+            }
+            else{
+                System.Console.WriteLine("Invalid Expression");
+                return;
             }
         }
 
