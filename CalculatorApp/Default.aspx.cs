@@ -59,7 +59,7 @@ namespace CalculatorApp
             Calculator.clearCalc();
             calcInput.Text = Calculator.expression;
             calcTotal.Text = Calculator.runningTotal.ToString();
-            calcTotal.CssClass = "";
+            calcTotal.CssClass = "solution";
         }
 
     }

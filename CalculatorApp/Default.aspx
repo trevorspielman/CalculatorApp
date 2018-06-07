@@ -30,12 +30,22 @@
         .equated{
             background: green;
             color: white;
+            float: right;
+            height: 40px;
+            padding: 10px;
+            width: 30vw;
+            border: 1px solid black;
+            cursor: none;
+            pointer-events: none;
+            font-size: 30px;
+            margin-bottom: 1rem;
         }
+
         input[type="submit"]{
             text-align: center;
             width: 100%;
             height 100%;
-<!--            transition: all .3s linear;-->
+            transition: all .4s linear;
         }    
         input[type="submit"].numberBtn{
             background: GhostWhite;
@@ -45,6 +55,28 @@
             background: black;
             color: white;
             cursor: pointer;
+        }
+        input[type="text"].equation{
+            border: 1px solid black;
+            float: left;
+            height: 40px;
+            padding: 10px;
+            width: 58.5vw;
+            cursor: none;
+            pointer-events: none;
+            font-size: 30px;
+            margin-bottom: 1rem;
+        }
+        input[type="text"].solution{
+            float: right;
+            height: 40px;
+            padding: 10px;
+            width: 30vw;
+            border: 1px solid black;
+            cursor: none;
+            pointer-events: none;
+            font-size: 30px;
+            margin-bottom: 1rem;
         }
         #button0{
             grid-area: z;
@@ -101,9 +133,9 @@
 </head>
 <body>
 	<form id="form1" runat="server">
-            
-            <asp:TextBox id="calcInput" runat="server"/>
-            <asp:TextBox id="calcTotal" runat="server"/>
+    
+            <asp:TextBox CssClass="equation" id="calcInput" runat="server"/>
+            <asp:TextBox CssClass="solution" id="calcTotal" runat="server"/>                
             <div class="numbers">
                 <asp:Button CssClass="numberBtn" id="button1" runat="server" Text="1" OnCommand="buttonClicked" CommandArgument="1" />
                 <asp:Button CssClass="numberBtn" id="button2" runat="server" Text="2" OnCommand="buttonClicked" CommandArgument="2" />
