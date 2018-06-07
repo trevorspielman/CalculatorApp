@@ -9,17 +9,21 @@ namespace CalculatorApp
         ADD,
         SUBTRACT,
         MULTIPLY,
-        DIVIDE
+        DIVIDE,
+        PARENSOPEN,
+        PARENSCLOSE
     }
 
     public static class Calculator
     {
         public static CALCSTATE _state { get; private set; } = CALCSTATE.INPUT;
         public static decimal currentN { get; private set; } = 0;
-        public static decimal prevN { get; private set; } = 1;
+        public static decimal prevN { get; set; } = 1;
         public static string currentS { get; private set; } = "";
         public static decimal runningTotal { get; private set; } = 0;
         public static string expression { get; private set; } = "";
+        public static bool inside { get; set; } = false;
+        public static decimal insideN { get; set; } = 0;
 
         internal static void clearCalc()
         {
@@ -34,15 +38,14 @@ namespace CalculatorApp
         internal static void ApplyOperator(object calcOperator)
         {
             decimal n;
-            if(_state == CALCSTATE.INPUT){
+            if(_state == CALCSTATE.INPUT && (!"()".Contains(calcOperator.ToString()))){
                 currentS = "";
             }
             decimal.TryParse(currentS, out n);
-            if (!"()+-*/".Contains(expression[expression.Length-1].ToString()))
+            if (!"+-*/".Contains(expression[expression.Length-1].ToString()))
             {
                 expression += calcOperator;
                 currentS = "";
-                //prevS = currentS;
 
                 switch (calcOperator)
                 {
@@ -57,6 +60,13 @@ namespace CalculatorApp
                         break;
                     case "/":
                         _state = CALCSTATE.DIVIDE;
+                        break;
+                    case "(":
+                        _state = CALCSTATE.PARENSOPEN;
+                        inside = true;
+                        break;
+                    case ")":
+                        _state = CALCSTATE.PARENSCLOSE;
                         break;
                 }
             }
@@ -110,9 +120,9 @@ namespace CalculatorApp
         {
             decimal n;
             decimal.TryParse(currentS, out n);
-            runningTotal = (currentN + (prevN * n));
+            runningTotal = (currentN * (prevN * n));
             currentN *= n;
-            prevN = runningTotal;
+            //prevN = runningTotal;
         }
 
 
@@ -120,9 +130,9 @@ namespace CalculatorApp
         {
             decimal n;
             decimal.TryParse(currentS, out n);
-            runningTotal = (currentN + (prevN / n));
+            runningTotal = (currentN / (n / prevN));
             currentN /= n;
-            prevN = runningTotal;
+            //prevN = runningTotal;
         }
 
     }

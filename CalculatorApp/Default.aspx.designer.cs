@@ -51,6 +51,12 @@ namespace CalculatorApp {
 		
 		protected System.Web.UI.WebControls.Button divide;
 		
+		protected System.Web.UI.WebControls.Button parensOpen;
+		
+		protected System.Web.UI.WebControls.Button parensClose;
+		
 		protected System.Web.UI.WebControls.Button equal;
+		
+		protected System.Web.UI.WebControls.Button empty;
 	}
 }
