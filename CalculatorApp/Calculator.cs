@@ -38,12 +38,13 @@ namespace CalculatorApp
         internal static void ApplyOperator(object calcOperator)
         {
             decimal n;
-            if(_state == CALCSTATE.INPUT && (!"()".Contains(calcOperator.ToString()))){
+            if (_state == CALCSTATE.INPUT && (!"()".Contains(calcOperator.ToString())))
+            {
                 currentS = "";
                 runningTotal = currentN;
             }
             decimal.TryParse(currentS, out n);
-            if (!"+-*/".Contains(expression[expression.Length-1].ToString()))
+            if (!"+-*/".Contains(expression[expression.Length - 1].ToString()))
             {
                 expression += calcOperator;
                 currentS = "";
@@ -77,7 +78,8 @@ namespace CalculatorApp
                 }
 
             }
-            else{
+            else
+            {
                 System.Console.WriteLine("Invalid Expression");
                 return;
             }
@@ -125,8 +127,19 @@ namespace CalculatorApp
         {
             decimal n;
             decimal.TryParse(currentS, out n);
-            runningTotal = (currentN * (prevN * n));
-            //prevN = runningTotal;
+
+            if (prevN == 1)
+            {
+                //works for multiplication w/o sub/add functions or prevN = 1
+                runningTotal = (currentN * (prevN * n));
+            }
+            else
+            {
+                //works for Order of operations
+                runningTotal = ((currentN - prevN) + (prevN * n));
+            }
+
+            //currentN = currentN - prevN;
         }
 
 
@@ -134,6 +147,8 @@ namespace CalculatorApp
         {
             decimal n;
             decimal.TryParse(currentS, out n);
+
+
             runningTotal = (currentN / (n / prevN));
             //prevN = runningTotal;
         }
