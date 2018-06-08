@@ -128,9 +128,9 @@ namespace CalculatorApp
             decimal n;
             decimal.TryParse(currentS, out n);
 
-            if (prevN == 1)
+            if (!expression.Contains("+") && !expression.Contains("-"))
             {
-                //works for multiplication w/o sub/add functions or prevN = 1
+                //works for multiplication w/o sub/add
                 runningTotal = (currentN * (prevN * n));
             }
             else
@@ -139,7 +139,6 @@ namespace CalculatorApp
                 runningTotal = ((currentN - prevN) + (prevN * n));
             }
 
-            //currentN = currentN - prevN;
         }
 
 
@@ -148,9 +147,20 @@ namespace CalculatorApp
             decimal n;
             decimal.TryParse(currentS, out n);
 
+            if(n == 0){
+                //allows 0 to be entered into the expression so I can divide by decimals
+                return;
+            }
+            if (!expression.Contains("+") && !expression.Contains("-"))
+            {
+                //works for division w/o sub/add functions or prevN = 1
+                runningTotal = (currentN / (n / prevN));
+            }
+            else {
+                //works for Order of operations
+                runningTotal = ((currentN - prevN) + (prevN / n));
+            }
 
-            runningTotal = (currentN / (n / prevN));
-            //prevN = runningTotal;
         }
 
     }
