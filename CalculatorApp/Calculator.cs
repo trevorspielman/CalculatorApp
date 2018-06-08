@@ -38,7 +38,7 @@ namespace CalculatorApp
         internal static void ApplyOperator(object calcOperator)
         {
             decimal n;
-            if (_state == CALCSTATE.INPUT && (!"()".Contains(calcOperator.ToString())))
+            if (_state == CALCSTATE.INPUT)
             {
                 currentS = "";
                 runningTotal = currentN;
@@ -68,19 +68,11 @@ namespace CalculatorApp
                         _state = CALCSTATE.DIVIDE;
                         currentN = runningTotal;
                         break;
-                    case "(":
-                        _state = CALCSTATE.PARENSOPEN;
-                        inside = true;
-                        break;
-                    case ")":
-                        _state = CALCSTATE.PARENSCLOSE;
-                        break;
                 }
 
             }
             else
             {
-                System.Console.WriteLine("Invalid Expression");
                 return;
             }
         }
@@ -105,6 +97,22 @@ namespace CalculatorApp
             }
         }
 
+        internal static void HandleParens(object commandArgument)
+        {
+            expression += commandArgument;
+            switch (commandArgument)
+            {
+                case "(":
+                    inside = true;
+                    break;
+                case ")":
+                    inside = false;
+                    currentN = insideN;
+                    //prevN = insideN;
+                    break;
+            }
+        }
+
 
 
         public static void Add()
@@ -112,6 +120,9 @@ namespace CalculatorApp
             decimal n;
             decimal.TryParse(currentS, out n);
             runningTotal = (currentN + n);
+            if(inside){
+                insideN = runningTotal;
+            }
             prevN = n;
         }
 
@@ -120,6 +131,10 @@ namespace CalculatorApp
             decimal n;
             decimal.TryParse(currentS, out n);
             runningTotal = (currentN - n);
+            if (inside)
+            {
+                insideN = runningTotal;
+            }
             prevN = -n;
         }
 
@@ -133,10 +148,18 @@ namespace CalculatorApp
                 //works for multiplication w/o sub/add
                 runningTotal = (currentN * (prevN * n));
             }
+            if(expression.Contains(")") || expression.Contains("("))
+            {
+                runningTotal = (currentN * n);
+            }
             else
             {
                 //works for Order of operations
                 runningTotal = ((currentN - prevN) + (prevN * n));
+            }
+            if (inside)
+            {
+                insideN = runningTotal;
             }
 
         }
@@ -147,7 +170,8 @@ namespace CalculatorApp
             decimal n;
             decimal.TryParse(currentS, out n);
 
-            if(n == 0){
+            if (n == 0)
+            {
                 //allows 0 to be entered into the expression so I can divide by decimals
                 return;
             }
@@ -156,9 +180,18 @@ namespace CalculatorApp
                 //works for division w/o sub/add functions or prevN = 1
                 runningTotal = (currentN / (n / prevN));
             }
-            else {
+            if (expression.Contains(")") || expression.Contains("("))
+            {
+                runningTotal = (currentN / n);
+            }
+            else
+            {
                 //works for Order of operations
                 runningTotal = ((currentN - prevN) + (prevN / n));
+            }
+            if (inside)
+            {
+                insideN = runningTotal;
             }
 
         }

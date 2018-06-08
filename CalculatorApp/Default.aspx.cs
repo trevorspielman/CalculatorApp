@@ -34,16 +34,6 @@ namespace CalculatorApp
                 case CALCSTATE.DIVIDE:
                     Calculator.Divide();
                     break;
-                case CALCSTATE.PARENSOPEN:
-                    while (Calculator.inside)
-                    {
-                        Calculator.insideN = Calculator.runningTotal;
-                    }
-                    break;
-                case CALCSTATE.PARENSCLOSE:
-                    Calculator.prevN = Calculator.insideN;
-                    Calculator.inside = false;
-                    break;
             }
             calcInput.Text = Calculator.expression;
             calcTotal.Text = Calculator.runningTotal.ToString();
@@ -55,6 +45,12 @@ namespace CalculatorApp
                 var calcOperator = args.CommandArgument;
                 Calculator.ApplyOperator(calcOperator);
                 calcInput.Text = Calculator.expression;
+        }
+
+        public void handleParens(object sender, CommandEventArgs args)
+        {
+            Calculator.HandleParens(args.CommandArgument);
+            calcInput.Text = Calculator.expression;
         }
 
         public void equalCalc(object sender, CommandEventArgs args)

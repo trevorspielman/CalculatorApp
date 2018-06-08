@@ -163,8 +163,8 @@
                 <asp:Button CssClass="operator" id="subtract" runat="server" Text="-" OnCommand="calculateExpression" CommandArgument="-" />
                 <asp:Button CssClass="operator" id="multiply" runat="server" Text="*" OnCommand="calculateExpression" CommandArgument="*" />
                 <asp:Button CssClass="operator" id="divide" runat="server" Text="/" OnCommand="calculateExpression" CommandArgument="/"/>
-                <asp:Button CssClass="operator" id="parensOpen" runat="server" Text="(" OnCommand="calculateExpression" CommandArgument="("/>
-                <asp:Button CssClass="operator" id="parensClose" runat="server" Text=")" OnCommand="calculateExpression" CommandArgument=")"/>
+                <asp:Button CssClass="operator" id="parensOpen" runat="server" Text="(" OnCommand="handleParens" CommandArgument="("/>
+                <asp:Button CssClass="operator" id="parensClose" runat="server" Text=")" OnCommand="handleParens" CommandArgument=")"/>
                 <asp:Button CssClass="equals" id="equal" runat="server" Text="=" OnCommand="equalCalc" CommandArgument="="/>
                 <asp:Button CssClass="numberBtn" id="empty" runat="server" Text=""/>
                 
