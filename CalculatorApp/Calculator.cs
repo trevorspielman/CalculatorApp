@@ -40,26 +40,32 @@ namespace CalculatorApp
             decimal n;
             if(_state == CALCSTATE.INPUT && (!"()".Contains(calcOperator.ToString()))){
                 currentS = "";
+                runningTotal = currentN;
             }
             decimal.TryParse(currentS, out n);
             if (!"+-*/".Contains(expression[expression.Length-1].ToString()))
             {
                 expression += calcOperator;
                 currentS = "";
+                currentN += n;
 
                 switch (calcOperator)
                 {
                     case "+":
                         _state = CALCSTATE.ADD;
+                        currentN = runningTotal;
                         break;
                     case "-":
                         _state = CALCSTATE.SUBTRACT;
+                        currentN = runningTotal;
                         break;
                     case "*":
                         _state = CALCSTATE.MULTIPLY;
+                        currentN = runningTotal;
                         break;
                     case "/":
                         _state = CALCSTATE.DIVIDE;
+                        currentN = runningTotal;
                         break;
                     case "(":
                         _state = CALCSTATE.PARENSOPEN;
@@ -69,6 +75,7 @@ namespace CalculatorApp
                         _state = CALCSTATE.PARENSCLOSE;
                         break;
                 }
+
             }
             else{
                 System.Console.WriteLine("Invalid Expression");
@@ -103,7 +110,6 @@ namespace CalculatorApp
             decimal n;
             decimal.TryParse(currentS, out n);
             runningTotal = (currentN + n);
-            currentN += n;
             prevN = n;
         }
 
@@ -112,7 +118,6 @@ namespace CalculatorApp
             decimal n;
             decimal.TryParse(currentS, out n);
             runningTotal = (currentN - n);
-            currentN -= n;
             prevN = -n;
         }
 
@@ -121,7 +126,6 @@ namespace CalculatorApp
             decimal n;
             decimal.TryParse(currentS, out n);
             runningTotal = (currentN * (prevN * n));
-            currentN *= n;
             //prevN = runningTotal;
         }
 
@@ -131,7 +135,6 @@ namespace CalculatorApp
             decimal n;
             decimal.TryParse(currentS, out n);
             runningTotal = (currentN / (n / prevN));
-            currentN /= n;
             //prevN = runningTotal;
         }
 
